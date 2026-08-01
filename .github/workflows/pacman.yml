@@ -5,26 +5,26 @@ on:
   schedule:
     - cron: "0 0 * * *"
   
-  # Permite ejecutarlo manualmente
+  # Permite ejecutarlo manualmente desde la pestaña Actions
   workflow_dispatch:
   
-  # Se ejecuta al hacer push a la rama main
+  # Se ejecuta automáticamente al hacer push a main
   push:
     branches:
       - main
 
 jobs:
-  build:
+  github-metrics:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
-      - uses: actions/checkout@v3
-
-      - name: Generate Pacman
-        uses: lowlighter/metrics@latest
+      - uses: lowlighter/metrics@latest
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           user: infinityxgame
           template: classic
           base: ""
+          config_theme: dark
           plugin_isocalendar: yes
           plugin_isocalendar_duration: full-year
